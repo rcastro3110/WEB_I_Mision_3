@@ -4,6 +4,7 @@ export default function FormularioBusqueda({
   alCambiarTexto,
   alCambiarSoloConNota,
   alBuscar,
+  ocupado,
 }) {
   function manejarEnvio(evento) {
     evento.preventDefault();
@@ -18,7 +19,7 @@ export default function FormularioBusqueda({
         value={texto}
         onChange={(e) => alCambiarTexto(e.target.value)}
       />
-      <button type="submit">Search</button>
+      <button type="submit" disabled={ocupado}>Search</button>
       <label className="filtro">
         <input
           type="checkbox"
