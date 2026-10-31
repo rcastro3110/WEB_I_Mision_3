@@ -108,10 +108,9 @@ export default function App() {
 
   return (
     <>
-      <h1>TV Show Finder</h1>
-
-      {idElegida === null ? (
-        <>
+      <header className="cabecera">
+        <h1>TV Show Finder</h1>
+        {idElegida === null && (
           <FormularioBusqueda
             texto={texto}
             soloConNota={soloConNota}
@@ -120,6 +119,11 @@ export default function App() {
             alBuscar={buscar}
             ocupado={estado === "cargando"}
           />
+        )}
+      </header>
+
+      {idElegida === null ? (
+        <>
           {estado === "cargando" && <p className="estado">⏳ Loading…</p>}
           {estado === "error" && (
             <p className="estado estado--error">⚠ {error}</p>
