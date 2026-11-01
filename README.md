@@ -5,7 +5,7 @@ Misión M3 · Reactor Core — Web Development I.
 App en React 19 + Vite que busca series de TV con la API pública de TVMaze, muestra su nota y géneros, y abre un detalle con resumen y episodios por temporada. Es la app de la M2 reconstruida con componentes, estado y efectos.
 
 
-## Qué puedes hacer
+## Qué se puede hacer
 
 - Buscar series por nombre.
 - Marcar "Rated only" para ocultar las que no tienen nota (la nota media se recalcula).
