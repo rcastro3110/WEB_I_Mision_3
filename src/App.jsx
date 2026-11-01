@@ -8,7 +8,7 @@ import {
   limpiarDetalle,
   limpiarEpisodios,
   agruparPorTemporada,
-  soloConNota as filtrarConNota,
+  soloConNota,
   notaMedia,
 } from "./logica.js";
 
@@ -22,7 +22,7 @@ export default function App() {
   // Estado de la búsqueda
   const [texto, setTexto] = useState("");
   const [consulta, setConsulta] = useState("");
-  const [soloConNota, setSoloConNota] = useState(false);
+  const [tienenNota, setTieneNota] = useState(false);
   const [series, setSeries] = useState([]);
   const [estado, setEstado] = useState("idle");
   const [error, setError] = useState(null);
@@ -80,7 +80,7 @@ export default function App() {
   }, [idElegida]);
 
   // Valores derivados (no son estado)
-  const seriesVisibles = soloConNota ? filtrarConNota(series) : series;
+  const seriesVisibles = tienenNota ? soloConNota(series) : series;
   const media = notaMedia(seriesVisibles);
   const detalle = serieDetalle ? limpiarDetalle(serieDetalle) : null;
   const porTemporada = serieDetalle
@@ -113,9 +113,9 @@ export default function App() {
         {idElegida === null && (
           <FormularioBusqueda
             texto={texto}
-            soloConNota={soloConNota}
+            soloConNota={tienenNota}
             alCambiarTexto={setTexto}
-            alCambiarSoloConNota={setSoloConNota}
+            alCambiarSoloConNota={setTieneNota}
             alBuscar={buscar}
             ocupado={estado === "cargando"}
           />
