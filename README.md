@@ -8,15 +8,16 @@ App en React 19 + Vite que busca series de TV con la API pública de TVMaze, mue
 ## Qué se puede hacer
 
 - Buscar series por nombre.
-- Marcar "Rated only" para ocultar las que no tienen nota (la nota media se recalcula).
+- Marcar "Rated only" para ocultar las que no tienen nota.
 - Pulsar una tarjeta para ver el detalle con episodios por temporada.
 - Volver con "Back" sin repetir la búsqueda.
 - Ver estados de carga y error.
 
 ## Estructura
 
-- `src/App.jsx`: guarda el estado, lanza los dos efectos y decide qué vista se pinta.
-- `src/components/`: `FormularioBusqueda`, `ListaSeries`, `TarjetaSerie`, `DetalleSerie` y `ListaEpisodios`. Solo pintan props y avisan con funciones.
+- `src/App.jsx`: guarda el estado de la interfaz y decide qué vista se pinta.
+- `src/hooks/useFetch.js`: custom hook que pide datos (efecto, cleanup y estados cargando/error/ok).
+- `src/components/`: `FormularioBusqueda`, `ListaSeries`, `TarjetaSerie`, `DetalleSerie`, `ListaEpisodios` y `EstadoCarga`. Solo pintan props y avisan con funciones.
 - `src/api.js`: `fetch` a TVMaze con caché en `localStorage`.
 - `src/logica.js`: funciones puras que limpian y transforman los datos.
 
@@ -38,5 +39,5 @@ Lo que hice yo: elegí la API y la idea del detalle con episodios, decidí que c
 1. Reutilicé `api.js` y `logica.js` de la M2 sin tocarlos. Son funciones puras que no tocan el DOM, así que funcionan igual en React. Lo que desapareció fue `render.js` y `main.js`, porque ahora lo hacen los componentes.
 2. Un componente por cada pieza de la interfaz (formulario, lista, tarjeta, detalle, episodios). Cada uno hace una sola cosa y solo recibe props, así se entiende y se arregla más fácil.
 3. El estado vive en `App`. El texto, las series y la serie elegida los necesitan varios componentes, así que el estado va en el padre común y los hijos avisan con funciones (`alElegir`, `alVolver`).
-4. Lo que se puede calcular no se guarda como estado. La lista filtrada ("Rated only") y la nota media se calculan al renderizar a partir de `series`, así no pueden quedar desincronizadas.
-5. Cleanup con `ignorar` en los efectos. Si buscas algo y enseguida otra cosa, la respuesta vieja se descarta. En la M2 hacía lo mismo con contadores, pero con más código.
+4. Lo que se puede calcular no se guarda como estado. La lista filtrada, la serie limpia, los episodios por temporada y la media de cada temporada se calculan al renderizar.
+5. Custom hook `useFetch`. Pedir datos con efecto y cleanup se repetía dos veces (búsqueda y detalle), así que lo extraje a un hook. El cleanup descarta respuestas viejas, como los contadores de la M2 pero con menos código.
